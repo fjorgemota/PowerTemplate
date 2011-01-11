@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Teste</title>
+<style type="text/css">
+#fromtemplate,#tohtml{
+	width:49%;
+	float:left;
+	border:1px solid #999;
+	height:auto;
+}
+</style>
+</head>
+
+<body>
+<div id="fromtemplate">
+<h1>Bem Vindo ao Exemplo oficial da {{librarynamelink|safe}}</h1><br />
+Com a {{libraryname}}, voc&ecirc; pode:<br />
+<ul>
+{% for feature in features %}
+	<li><b>Vantagem {{forloop.counter}}</b> - {{feature}}</li>
+{% endfor %}
+</ul>
+<br />
+Todo a {{libraryname}} &eacute; expansivel com PLUGINS e tem incrivel facilidade de uso, necessitando apenas da seguinte sintaxe para rodar atualmente:<br />
+<pre>{{code}}</pre>
+<br />
+Vale lembrar que esta Biblioteca tamb&eacute;m funciona com os seguintes navegadores(j&aacute; testados):
+<ol>
+{% for nav in navigators %}
+<li>{{nav.name}} {{nav.version}}</li>
+{% endfor %}
+</ol><br />
+Atualmente, os seguintes comandos est&atilde;o disponiveis:<br />
+<ul>
+{% for command in tags %}
+
+     <li>{% {{command.val}} %}</li>
+{% endfor %} 
+{% for c in filters %}
+
+     <li>{{c.val|safe}}</li>
+{% endfor %} 
+</ul><br />
+Se quiser saber como usar os Filtros e as Tags, veja o c&oacute;digo desta p&aacute;gina.
+</div>
+<div id="tohtml">
+<h1>Clique no Link 'Processar Template' para visualizar o resultado do Template ao Lado</h1>
+</div>
+<script language="javascript" type="text/javascript" src="PowerTemplate.js"></script>
+<script language="javascript" type="text/javascript">
+function p(){
+	var tags = new Array(),filters=new Array();
+	for(var k in PowerTemplate._tags){
+		tags.push({'type':'tag','val':k});
+	}
+	for(var k2 in PowerTemplate._filters){
+		filters.push({'type':'filter','val':k2+'(filtro)'});
+	}
+	var cfg={
+		"features":["Criar Templates Din&acirc;micos que alteram de acordo com as suas necessidades","Tornar o seu C&oacute;digo mais limpo ao usar menos document.write e semelhantes","Usar Plugins que ampliam o poder da biblioteca, facilitando a cria&ccedil;&atilde;o daquilo que voc&ecirc; imaginar.","Tornar seus Codigos plenamente compativeis com os navegadores mais usados do Mundo atualmente"],
+		"code":"<script language='javascript' type='text/javascript' src='PowerTemplate.js'>&lt;/script&gt;\n<script language='javascript' type='text/javascript'>\ndocument.write(PowerTemplate.render_from_string('{{ola}} {{mundo}}!!!',{'ola':'Hello','mundo':'World'}));\n&lt;/script&gt;",
+		"navigators":[{
+			'name':'Google Chrome',
+			'version':'8.0'
+		},
+		{
+			'name':'Internet Explorer',
+			'version':'8.0'
+		},
+		{
+			'name':'Internet Explorer',
+			'version':'7.0'
+		},
+		{
+			'name':'Firefox',
+			'version':'3.6'
+		}],
+		tags:tags,
+		filters:filters
+    };
+	document.getElementById("tohtml").innerHTML = PowerTemplate.render_from_string(document.getElementById("fromtemplate").innerHTML,cfg);
+}
+</script>
+<br />
+<div style="width:100%; float:left;height:50px;background-color:blue;border:1px solid #999;font-size:36px;text-align:center;"><a href="javascript:void(0);" style="color:#000;" onclick="p();">Processar Template</a></div>
+</body>
+</html>
